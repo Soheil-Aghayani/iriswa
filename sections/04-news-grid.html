@@ -1,0 +1,15 @@
+<section class="section-padding" style="background-color: var(--color-bg-light); border-top: 1px solid var(--color-border); margin-top: 40px;">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 50px;">
+            <h2 style="color: var(--color-dark); font-size: 2.2rem; margin-bottom: 10px;">آخرین اخبار و رویدادها</h2>
+        </div>
+        
+        <div class="news-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+            {{ automated_news_cards }}
+        </div>
+
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="/news.html" class="btn-outline" style="color: var(--color-primary); border-color: var(--color-primary);">آرشیو کامل اخبار</a>
+        </div>
+    </div>
+</section>

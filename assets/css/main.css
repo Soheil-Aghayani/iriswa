@@ -1,0 +1,800 @@
+/* ==========================================================================
+   1. Global Variables & Immersive Theme
+   ========================================================================== */
+:root {
+  /* Brand Colors */
+  --color-primary: #047857;       /* Deep Emerald */
+  --color-primary-hover: #065f46;
+  --color-secondary: #10B981;     /* Vibrant Emerald Accent */
+  --color-dark: #111827;          
+  
+  /* Immersive Backgrounds */
+  --color-bg-light: #F2F6F4;      /* Misty, organic green tint */
+  --color-bg-white: #FFFFFF;
+  --color-border: #E5E7EB;
+
+  /* Typography Colors */
+  --color-text-main: #374151;
+  --color-text-muted: #6B7280;
+
+  /* Spacing & Layout */
+  --container-width: 1280px;
+  --transition-speed: 0.3s ease;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   2. Base Resets & Typography
+   ========================================================================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  color: var(--color-text-main);
+  background: linear-gradient(135deg, var(--color-bg-light) 0%, #E8F0EA 100%);
+  background-attachment: fixed;
+  line-height: 1.7;
+  direction: rtl; /* Right to Left for Persian */
+  overflow-x: hidden;
+}
+
+a { color: var(--color-primary); text-decoration: none; transition: all var(--transition-speed); }
+a:hover { color: var(--color-secondary); }
+ul { list-style: none; }
+
+/* ==========================================================================
+   3. Layout & Utilities
+   ========================================================================== */
+.container { width: 100%; max-width: var(--container-width); margin: 0 auto; padding: 0 24px; }
+.section-padding { padding: 80px 0; }
+.section-title { text-align: center; margin-bottom: 50px; font-size: 2.2rem; color: var(--color-dark); font-weight: 800;}
+
+/* CSS Grids */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+
+/* ==========================================================================
+   Mobile Fixes for CTA Banner & Partners
+   ========================================================================== */
+@media (max-width: 768px) {
+  .grid-2 {
+    grid-template-columns: 1fr !important; 
+    gap: 40px; /* Adds nice breathing room between the text and the cards */
+  }
+
+  /* Remove the desktop padding so the text centers properly on phones */
+  .grid-2 > div[style*="padding-left"] {
+    padding-left: 0 !important;
+    text-align: center; 
+  }
+
+  /* ... (Your existing .cta-banner rules should stay right below this) ... */
+  .cta-banner {
+    padding: 30px 15px; 
+    margin-top: 20px;
+  }
+  
+  .cta-banner h2 {
+    font-size: 1.35rem; /* Significantly smaller text */
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  /* Target the div holding the phone and email */
+  .cta-banner div[style*="display: flex"] {
+    flex-direction: column; 
+    gap: 10px !important; 
+    font-size: 1rem !important;
+  }
+
+  .partners-banner {
+    flex-direction: column; 
+    gap: 20px;
+    align-items: center;
+  }
+
+  /* Add this inside your max-width: 768px block */
+  .search-form:hover .search-input,
+  .search-input:focus {
+    width: 210px !important;
+  }
+}
+
+/* ==========================================================================
+   4. Section-Specific Styles
+   ========================================================================== */
+/* Section 1: Hero */
+.hero {
+  background: linear-gradient(135deg, var(--color-dark), var(--color-primary));
+  color: white;
+  padding: 100px 20px 140px;
+  text-align: center;
+}
+.hero h1 { font-size: 3rem; margin-bottom: 20px; font-weight: 900; line-height: 1.3;}
+.hero p { font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px; opacity: 0.9; }
+
+/* Section 2: Overlapping Quick Links */
+.overlap-cards { margin-top: -80px; position: relative; z-index: 10; }
+.card {
+  background: var(--color-bg-white); padding: 40px 30px; border-radius: var(--radius-lg); 
+  box-shadow: var(--shadow-md); border: 1px solid var(--color-border); transition: transform var(--transition-speed);
+}
+.card:hover { transform: translateY(-5px); }
+.card h3 { color: var(--color-dark); margin-bottom: 15px; font-size: 1.4rem;}
+
+/* Section 3: About & Stats */
+/* Section 3: About & Stats (Bento Box Cards) */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.stat-card {
+  background-color: var(--color-bg-light);
+  padding: 30px 20px;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  border: 1px solid var(--color-border);
+  transition: transform var(--transition-speed), border-color var(--transition-speed);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-secondary);
+  box-shadow: var(--shadow-sm);
+  background-color: var(--color-bg-white);
+}
+
+.stat-card h4 {
+  font-size: 2.8rem;
+  color: var(--color-primary);
+  font-weight: 900;
+  margin-bottom: 5px;
+  line-height: 1;
+}
+
+.stat-card p {
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Force the 2x2 grid to stay perfect on Mobile! */
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr; /* Locks it to 2 columns on phones */
+    gap: 15px;
+    margin-top: 30px;
+  }
+  .stat-card {
+    padding: 20px 10px;
+  }
+  .stat-card h4 {
+    font-size: 2.2rem; /* Slightly smaller numbers for tiny screens */
+  }
+
+  /* Force the About section layout to stack on phones */
+  .section-padding > .grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: 40px;
+    text-align: center;
+  }
+
+  /* Remove the desktop padding so the text centers beautifully */
+  .section-padding > .grid-2 > div[style*="padding-left"] {
+    padding-left: 0 !important;
+  }
+}
+
+/* Section 4: Automated News Cards */
+.news-card {
+  display: flex; flex-direction: column; background: var(--color-bg-white);
+  border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md);
+  transition: transform var(--transition-speed); border: 1px solid var(--color-border);
+}
+.news-card:hover { transform: translateY(-5px); }
+.news-card-image { width: 100%; height: 220px; object-fit: cover; border-bottom: 3px solid var(--color-secondary); }
+.news-card-content { padding: 25px; }
+.news-meta { font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 10px; display: block; }
+
+/* Section 5: CTA & Partners */
+.cta-banner {
+  background-color: var(--color-primary); color: white; border-radius: var(--radius-lg); 
+  padding: 50px; text-align: center; margin-top: 40px; box-shadow: var(--shadow-md);
+}
+.cta-banner h2 { font-size: 2rem; }
+.partners-banner {
+  display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; 
+  opacity: 0.6; filter: grayscale(100%); transition: all var(--transition-speed);
+}
+.partners-banner:hover { filter: grayscale(0%); opacity: 1; }
+
+/* ==========================================================================
+   5. Header & Navigation Menu
+   ========================================================================== */
+.site-header {
+  background-color: var(--color-primary); 
+  color: var(--color-bg-white);
+  box-shadow: var(--shadow-md);
+  position: sticky; 
+  top: 0;
+  z-index: 1000;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+}
+
+.site-branding .logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.site-logo {
+  max-height: 55px;
+  width: auto;
+}
+
+.main-nav { height: 100%; }
+
+.nav-list {
+  display: flex;
+  height: 100%;
+  gap: 12px; 
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list > li {
+  display: flex;
+  align-items: center;
+  position: relative; 
+}
+
+.nav-list > li > a {
+  color: var(--color-bg-white);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 10px 5px;
+  white-space: nowrap; 
+}
+
+.nav-list > li > a:hover {
+  color: var(--color-secondary);
+}
+
+/* Dropdown Styles */
+.has-dropdown .dropdown-arrow { font-size: 0.8rem; margin-right: 4px; }
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0; 
+  background-color: var(--color-bg-white);
+  min-width: 220px;
+  box-shadow: var(--shadow-md);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  border-top: 3px solid var(--color-secondary);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all var(--transition-speed);
+  z-index: 1001;
+}
+
+.dropdown-menu li { border-bottom: 1px solid var(--color-border); }
+.dropdown-menu li:last-child { border-bottom: none; }
+.dropdown-menu a {
+  display: block; padding: 12px 20px; color: var(--color-text-main); font-size: 0.9rem;
+}
+.dropdown-menu a:hover { background-color: var(--color-bg-light); color: var(--color-primary); }
+.has-dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+
+/* ==========================================================================
+   6. Footer Component
+   ========================================================================== */
+.site-footer {
+  background-color: var(--color-dark); /* Dark slate background */
+  color: var(--color-bg-white);
+  padding: 80px 0 20px;
+  margin-top: 80px;
+  border-top: 5px solid var(--color-secondary); /* Vibrant emerald border top */
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.footer-col h3 {
+  color: var(--color-bg-white);
+  font-size: 1.3rem;
+  margin-bottom: 25px;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+/* The little green underline under footer headings */
+.footer-col h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50px;
+  height: 3px;
+  background-color: var(--color-secondary);
+  border-radius: 2px;
+}
+
+.footer-col p {
+  color: #D1D5DB; /* Soft light gray for readability */
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 15px;
+  color: #D1D5DB;
+  font-size: 0.95rem;
+}
+
+.footer-links a {
+  color: #D1D5DB;
+  transition: all var(--transition-speed);
+  display: inline-block;
+}
+
+.footer-links a:hover {
+  color: var(--color-secondary);
+  transform: translateX(-5px); /* Smooth hover indent for RTL text */
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #9CA3AF;
+  font-size: 0.9rem;
+}
+
+/* --- Header Actions (Search & Mobile) --- */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  /* I REMOVED position: relative from here so the hamburger is safe! */
+}
+
+/* Glassmorphic Floating Search */
+.search-form {
+  display: flex;
+  align-items: center;
+  position: relative; /* I ADDED it here! Now the search bar anchors ONLY to its own icon. */
+}
+
+.search-input {
+  position: absolute;
+  left: 0; /* Anchors precisely to the search icon */
+  right: auto; 
+  width: 40px; 
+  height: 40px;
+  opacity: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--color-bg-white);
+  border-radius: 20px;
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.search-input::placeholder { color: rgba(255, 255, 255, 0.8); }
+
+/* The Expansion Magic */
+.search-form:hover .search-input,
+.search-input:focus {
+  width: 280px; 
+  opacity: 1;
+  padding: 0 15px 0 45px; 
+  background-color: var(--color-primary-hover); 
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  pointer-events: auto;
+}
+
+.search-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-bg-white);
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 11; /* Stays above the glass */
+  transition: color var(--transition-speed), transform 0.3s;
+}
+
+.search-form:hover .search-btn {
+  color: var(--color-secondary);
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+   Mobile Menu (Fixing the Dot!)
+   ========================================================================== */
+.mobile-menu-toggle {
+  display: none; /* This hides the dot on laptops! */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  z-index: 2000;
+}
+
+.hamburger-line {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--color-bg-white);
+  margin: 5px 0;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* ==========================================================================
+   Mobile Responsive Fixes (Bulletproof Dropdown)
+   ========================================================================== */
+@media (max-width: 1100px) {
+  .mobile-menu-toggle { display: block; }
+  
+  /* Make sure the header anchors the dropdown */
+  .header-inner { position: relative; }
+
+  /* 1. The Mobile Menu Container */
+  .main-nav {
+    display: none; 
+    position: absolute;
+    top: 100%; /* Snaps perfectly to the bottom of the green header */
+    right: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-primary); /* Solid Green Background */
+    box-shadow: 0 20px 30px rgba(0,0,0,0.5);
+    z-index: 9999; /* Forces it OVER everything else on the page */
+    height: auto; /* Kills the bug that stretched it across the screen! */
+    max-height: 70vh; /* Keeps it shorter than the phone screen */
+    overflow-y: auto; /* Adds a clean scrollbar inside the menu if it's too long */
+    padding: 0;
+  }
+  
+  .main-nav.is-open {
+    display: block;
+    animation: slideDown 0.3s ease forwards;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* 2. Stack the links neatly */
+  .nav-list {
+    flex-direction: column;
+    height: auto; /* Kills the desktop 100% height bug */
+    gap: 0;
+  }
+
+  .nav-list > li {
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .nav-list > li > a {
+    display: block;
+    padding: 15px 25px;
+    font-size: 1.05rem;
+    white-space: normal;
+  }
+
+  /* 3. Fix the "مدیریت پسماند" Dropdown for mobile */
+  .dropdown-menu {
+    position: static;
+    box-shadow: none;
+    background-color: rgba(0, 0, 0, 0.15); /* Dark inset look for sub-menus */
+    min-width: 100%;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    display: none; 
+    border: none;
+    border-radius: 0;
+  }
+  
+  /* Tap to open sub-menu */
+  .has-dropdown:hover .dropdown-menu,
+  .has-dropdown:active .dropdown-menu {
+    display: block; 
+  }
+
+  /* Indent sub-menu items */
+  .dropdown-menu a {
+    padding: 12px 40px; 
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* ==========================================================================
+   Hero Section Button Visibility Fix
+   ========================================================================== */
+.hero .btn-primary {
+  background-color: var(--color-bg-white);
+  color: var(--color-primary); /* Dark green text so it's easy to read */
+  border: 2px solid var(--color-bg-white);
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all var(--transition-speed);
+  display: inline-block;
+}
+
+/* Hover effect: Turns transparent with a white border */
+.hero .btn-primary:hover {
+  background-color: transparent;
+  color: var(--color-bg-white);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.hero .btn-outline {
+  background-color: transparent;
+  color: var(--color-bg-white);
+  border: 2px solid rgba(255, 255, 255, 0.7); /* Soft white border */
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all var(--transition-speed);
+  display: inline-block;
+}
+
+/* Hover effect: Fills with white */
+.hero .btn-outline:hover {
+  background-color: var(--color-bg-white);
+  color: var(--color-primary);
+  border-color: var(--color-bg-white);
+  transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   Board Members Page Styles
+   ========================================================================== */
+.board-grid {
+  display: grid;
+  /* Automatically fits as many 250px cards as possible in a row! */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.board-card {
+  background-color: var(--color-bg-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-align: center;
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed), border-color var(--transition-speed);
+}
+
+.board-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-secondary);
+}
+
+.board-img-wrapper {
+  width: 100%;
+  aspect-ratio: 4/5; /* Forces all images to be the exact same size/shape! */
+  background-color: #E8F0EA; /* Soft green placeholder */
+  overflow: hidden;
+  border-bottom: 2px solid var(--color-secondary);
+}
+
+.board-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Crops image automatically without squishing */
+  transition: transform 0.5s ease;
+}
+
+.board-card:hover .board-img-wrapper img {
+  transform: scale(1.08); /* Beautiful slow zoom on hover */
+}
+
+.board-info {
+  padding: 25px 15px;
+}
+
+.board-info h3 {
+  font-size: 1.25rem;
+  color: var(--color-dark);
+  margin-bottom: 8px;
+  font-weight: 800;
+}
+
+.board-role {
+  color: var(--color-secondary);
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   Winter School / Event Table Styles (.wms-wrap)
+   ========================================================================== */
+.wms-wrap {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  background: transparent;
+  color: #0f172a;
+}
+
+.wms-card {
+  background: #fff;
+  border: 1px solid rgba(15,23,42,.10);
+  border-radius: 18px;
+  box-shadow: 0 14px 40px rgba(2,6,23,.08);
+  padding: 18px;
+  width: 100%;
+}
+
+.wms-title {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--color-primary);
+  line-height: 1.8;
+}
+
+.wms-sub {
+  margin: 6px 0 0;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.9;
+}
+
+.wms-info {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+}
+
+@media (max-width: 980px){
+  .wms-info { grid-template-columns: 1fr; }
+}
+
+.wms-box {
+  border: 1px solid rgba(15,23,42,.10);
+  border-radius: 16px;
+  padding: 15px;
+  background: #fbfdfc;
+}
+
+.wms-box h3 {
+  margin: 0 0 10px;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--color-primary);
+}
+
+.wms-box p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--color-text-main);
+}
+
+/* Social icons */
+.wms-social {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.wms-iconbtn {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(15,23,42,.12);
+  background: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform .12s ease, background .12s ease;
+}
+
+.wms-iconbtn:hover {
+  background: rgba(15,23,42,.04);
+  transform: translateY(-3px);
+}
+
+.wms-iconbtn svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+/* Table */
+.wms-tablewrap {
+  margin-top: 30px;
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(15,23,42,.10);
+}
+
+table.wms-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 940px;
+  background: #fff;
+}
+
+.wms-table thead th {
+  position: sticky;
+  top: 0;
+  background: #E8F0EA;
+  color: var(--color-primary);
+  font-weight: 900;
+  font-size: 1rem;
+  padding: 15px 10px;
+  border-bottom: 2px solid var(--color-primary);
+  white-space: nowrap;
+}
+
+.wms-table tbody td {
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: var(--color-text-main);
+  padding: 12px 10px;
+  border-bottom: 1px solid rgba(15,23,42,.08);
+  vertical-align: middle;
+}
+
+.wms-table tbody tr:hover td { background: #fbfdfc; }
+
+.col-n { width: 70px; text-align: center; color: var(--color-primary); font-weight: 900; }
+.col-date { width: 160px; white-space: nowrap; font-weight: 900; }
+.col-title { width: 520px; font-weight: 700; color: var(--color-dark); }
+.col-teacher { width: 360px; }
+
