@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فناوری‌های مدیریت پسماند | انجمن علمی مهندسی و مدیریت پسماند ایران</title>
+    <title>چهارمین مدرسه زمستانه مدیریت پسماند: مفاهیم و آزمون‌های شیمیایی (دوره ششم) | انجمن علمی مهندسی و مدیریت پسماند ایران</title>
     <link rel="stylesheet" href="./assets/css/main.css">
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v3.3.0/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <link rel="icon" type="image/png" href="./assets/images/logo.png">
@@ -68,24 +68,39 @@
 </header>
 
     <main id="main-content">
-        
-    <section class="article-header" style="background: linear-gradient(135deg, var(--color-primary) 0%, #0b3b26 100%); color: var(--color-bg-white); padding: 80px 20px 40px; text-align: center; margin-top: 80px;">
-        <div class="container" style="position: relative; z-index: 2;">
-            <h1 style="font-size: 2.4rem; font-weight: 900; margin: 0; color: #fff;">فناوری‌های مدیریت پسماند</h1>
-            <p style="font-size: 1.15rem; color: rgba(255,255,255,0.9); margin-top: 15px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.8;">آشنایی با جدیدترین تکنولوژی‌ها، تجهیزات و نوآوری‌های علمی در پردازش و بازیافت پسماند</p>
-        </div>
-        <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden; pointer-events: none;">
-            <div style="position: absolute; top: -50px; right: 10%; width: 150px; height: 150px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
-            <div style="position: absolute; bottom: -80px; left: 5%; width: 250px; height: 250px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
+        <!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>چهارمین مدرسه زمستانه مدیریت پسماند: مفاهیم و آزمون‌های شیمیایی (دوره ششم) - انجمن مدیریت پسماند</title>
+    <link rel="stylesheet" href="./assets/css/main.css">
+</head>
+<body>
+    
+    {{ include 'components/header.html' }}
+
+    <section class="article-header" style="background-color: var(--color-primary); color: var(--color-bg-white); padding: 80px 20px 40px; text-align: center; margin-top: 80px;">
+        <div class="container">
+            <h1 style="font-size: 2.2rem; font-weight: 900; margin: 0;">چهارمین مدرسه زمستانه مدیریت پسماند: مفاهیم و آزمون‌های شیمیایی (دوره ششم)</h1>
         </div>
     </section>
 
-    <section class="section-padding container" style="min-height: 45vh; margin-top: 40px; margin-bottom: 60px;">
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px;">
-            <p style="text-align: center; grid-column: 1/-1; font-size: 1.2rem; color: var(--color-text-muted); font-weight: bold;">در حال حاضر مطلبی در این بخش منتشر نشده است.</p>
+    <main class="container section-padding" style="min-height: 50vh; max-width: 1200px; margin: 0 auto; padding-top: 40px;">
+        
+        <div style="text-align: center; margin-bottom: 40px;">
+            <img src="./assets/images/news/winter-school-course6.jpg" alt="چهارمین مدرسه زمستانه مدیریت پسماند: مفاهیم و آزمون‌های شیمیایی (دوره ششم)" style="width: 100%; max-height: 500px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--color-border);" onerror="this.style.display='none'">
         </div>
-    </section>
+
+        {{ content }}
+        
+    </main>
+
+    {{ include 'components/footer.html' }}
     
+    <script src="./assets/js/main.js"></script>
+</body>
+</html>
     </main>
 
     <footer class="site-footer">
