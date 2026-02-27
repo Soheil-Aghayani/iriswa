@@ -2098,6 +2098,247 @@ def build_site():
     with open(os.path.join(base_dir, 'membership.html'), 'w', encoding='utf-8') as f:
         f.write(final_membership_page)
         
+    # =====================================================================
+    # 21. Generate the Contact Page (contact.html)
+    # =====================================================================
+    contact_page_html = """
+    <style>
+        .contact-wrap {
+            direction: rtl;
+            font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+            background: #f8fafc;
+            padding: 80px 20px;
+            min-height: 80vh;
+        }
+        .contact-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 40px;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(11, 59, 38, 0.08);
+            overflow: hidden;
+        }
+        
+        /* Left Side: Contact Info */
+        .contact-info {
+            background: linear-gradient(135deg, var(--color-primary), #082f1d);
+            color: #ffffff;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .contact-info h2 {
+            font-size: 2rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+        .contact-info p {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+        .info-icon {
+            background: rgba(255, 255, 255, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .info-text h4 { margin: 0 0 5px 0; font-size: 1.1rem; color: #f1f5f9; }
+        .info-text span { font-size: 1.1rem; font-weight: bold; direction: ltr; display: block; text-align: right; }
+        
+        /* Right Side: Form */
+        .contact-form-box {
+            padding: 50px 40px;
+        }
+        .contact-form-box h3 {
+            color: var(--color-dark);
+            font-size: 1.8rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-weight: 900;
+        }
+        .contact-form-box > p {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+        
+        .input-group { margin-bottom: 25px; text-align: right; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--color-dark); }
+        .input-control {
+            width: 100%; padding: 15px 20px; border: 2px solid #e2e8f0; border-radius: 12px;
+            font-family: 'Vazirmatn', Tahoma, sans-serif !important; font-size: 1.05rem; transition: all 0.3s ease; background: #f8fafc;
+        }
+        .input-control:focus { border-color: var(--color-primary); background: #ffffff; outline: none; box-shadow: 0 0 0 4px rgba(11, 59, 38, 0.1); }
+        textarea.input-control { resize: vertical; min-height: 150px; }
+        
+        .btn-submit {
+            background: var(--color-primary); color: #ffffff;
+            padding: 15px 40px; border-radius: 50px; font-size: 1.1rem; font-weight: bold; 
+            font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+            cursor: pointer; border: none; transition: all 0.3s ease; width: 100%;
+        }
+        .btn-submit:hover:not(:disabled) { background: #082f1d; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(11, 59, 38, 0.2); }
+        .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; }
+
+        .alert-box { display: none; padding: 20px; border-radius: 12px; margin-top: 20px; text-align: center; font-weight: bold; font-size: 1.1rem; }
+        .alert-success { background: #dcfce7; border: 1px solid #bbf7d0; color: #166534; }
+        .alert-error { background: #fee2e2; border: 1px solid #fecaca; color: #991b1b; }
+
+        /* Responsive */
+        @media only screen and (max-width: 900px) {
+            .contact-container { grid-template-columns: 1fr; }
+            .contact-info { padding: 40px 30px; }
+            .contact-form-box { padding: 40px 30px; }
+        }
+    </style>
+
+    <section class="contact-wrap">
+        <div class="contact-container">
+            
+            <div class="contact-info">
+                <div>
+                    <h2>ارتباط با ما</h2>
+                    <p>انجمن علمی مهندسی و مدیریت پسماند ایران همواره آماده شنیدن نظرات، پیشنهادات و پاسخگویی به سوالات شما پژوهشگران، دانشجویان و همکاران گرامی است.</p>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">📞</div>
+                        <div class="info-text">
+                            <h4>شماره تماس</h4>
+                            <span>۰۲۱ - ۶۱۱۱۳۱۹۹</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">✉️</div>
+                        <div class="info-text">
+                            <h4>پست الکترونیک</h4>
+                            <span>anjomanpasmand@gmail.com</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">✈️</div>
+                        <div class="info-text">
+                            <h4>کانال تلگرام</h4>
+                            <span>@anjomanpasmandiran</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 40px; text-align: center; opacity: 0.6;">
+                    <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                </div>
+            </div>
+
+            <div class="contact-form-box">
+                <h3>ارسال پیام آنلاین</h3>
+                <p>فرم زیر را تکمیل کنید، کارشناسان ما در اسرع وقت از طریق ایمیل یا تماس تلفنی پاسخگوی شما خواهند بود.</p>
+                
+                <form id="contact-form">
+                    <input type="hidden" name="access_key" value="0ddc649f-6c8e-4e32-810e-cb92ea65f7bf">
+                    <input type="hidden" name="subject" value="پیام جدید از صفحه ارتباط با ما - وبسایت انجمن">
+                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div class="input-group">
+                            <label>نام و نام خانوادگی *</label>
+                            <input type="text" name="name" class="input-control" required placeholder="مثال: علی محمدی">
+                        </div>
+                        <div class="input-group">
+                            <label>شماره تماس</label>
+                            <input type="text" name="phone" class="input-control" dir="ltr" style="text-align:left;" placeholder="09120000000">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>ایمیل شما *</label>
+                        <input type="email" name="email" class="input-control" dir="ltr" style="text-align:left;" required placeholder="example@gmail.com">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>متن پیام *</label>
+                        <textarea name="message" class="input-control" required placeholder="پیام یا سوال خود را اینجا بنویسید..."></textarea>
+                    </div>
+
+                    <div id="contact-alert-error" class="alert-box alert-error"></div>
+                    <div id="contact-alert-success" class="alert-box alert-success">پیام شما با موفقیت ارسال شد. به زودی با شما تماس خواهیم گرفت.</div>
+
+                    <button type="submit" id="contact-submit-btn" class="btn-submit">ارسال پیام</button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        const contactForm = document.getElementById('contact-form');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const errBox = document.getElementById('contact-alert-error');
+            const sucBox = document.getElementById('contact-alert-success');
+            const submitBtn = document.getElementById('contact-submit-btn');
+            
+            errBox.style.display = 'none';
+            sucBox.style.display = 'none';
+
+            const formData = new FormData(contactForm);
+            
+            // Loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'در حال ارسال پیام...';
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(async (response) => {
+                let json = await response.json();
+                if (response.status == 200) {
+                    sucBox.style.display = 'block';
+                    contactForm.reset();
+                } else {
+                    errBox.innerText = json.message || "خطا در ارسال فرم. لطفاً مجدداً تلاش کنید.";
+                    errBox.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                errBox.innerText = "ارتباط با سرور برقرار نشد. لطفاً اینترنت خود را بررسی کنید.";
+                errBox.style.display = 'block';
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'ارسال پیام';
+            });
+        });
+    </script>
+    """
+
+    final_contact_page = master_template.replace("{{ include 'components/header.html' }}", header)
+    final_contact_page = final_contact_page.replace("{{ include 'components/footer.html' }}", footer)
+    final_contact_page = final_contact_page.replace("{{ content }}", contact_page_html)
+    final_contact_page = final_contact_page.replace("{{ title }}", "ارتباط با ما")
+
+    with open(os.path.join(base_dir, 'contact.html'), 'w', encoding='utf-8') as f:
+        f.write(final_contact_page)
+    
     print("Boom! Index, Article pages, AND Search page generated successfully!")
 
 if __name__ == "__main__":
