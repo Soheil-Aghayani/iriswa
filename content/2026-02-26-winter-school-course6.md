@@ -1,7 +1,7 @@
 ---
 title: "چهارمین مدرسه زمستانه مدیریت پسماند: مفاهیم و آزمون‌های شیمیایی (دوره ششم)"
 date: "2026-02-26"
-image: "./assets/images/news/4th-winter-school.jpg"
+image: "./assets/images/news/winter-school-course6.jpg"
 tags: ["دوره‌ها و کارگاه‌ها", "اخبار"]
 ---
 
