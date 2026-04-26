@@ -102,8 +102,10 @@ def build_site():
 
     news_cards_html = ""
     all_news_cards_html = ""
+    all_news_cards_html = ""
+    homepage_card_count = 0 # Added a counter specifically for the homepage cards
 
-    for index, filepath in enumerate(md_files):
+    for filepath in md_files:
         filename = os.path.basename(filepath)
         page_filename = filename.replace('.md', '.html') 
         url = "./" + page_filename # Points to the root folder safely!
@@ -140,13 +142,14 @@ def build_site():
         with open(os.path.join(base_dir, page_filename), 'w', encoding='utf-8') as f:
             f.write(final_article)
 
-        # 3. GENERATE THE CARD HTML (Only if it's a newsletter!)
-        if 'newsletter' in content:
+        # 3. GENERATE THE CARD HTML (If it contains ANY of these tags)
+        if 'newsletter' in content or 'اخبار' in content or 'دوره‌ها و کارگاه‌ها' in content:
+            # Note: I also increased the height to 250px here to fix your image distortion!
             card_html = f"""
             <div style="background: var(--color-bg-white); border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--color-border); box-shadow: var(--shadow-sm); transition: transform 0.3s ease;">
                 <a href="{url}" style="text-decoration: none; color: inherit; display: block;">
-                    <div style="width: 100%; height: 220px; background-color: #E8F0EA; border-bottom: 2px solid var(--color-secondary); overflow: hidden;">
-                        <img src="{image}" alt="{title}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'">
+                    <div style="width: 100%; height: 250px; background-color: #E8F0EA; border-bottom: 2px solid var(--color-secondary); overflow: hidden;">
+                        <img src="{image}" alt="{title}" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" onerror="this.style.display='none'">
                     </div>
                     <div style="padding: 25px 20px;">
                         <h3 style="font-size: 1.2rem; color: var(--color-primary); margin-bottom: 15px; line-height: 1.6; font-weight: 800;">{title}</h3>
@@ -156,8 +159,11 @@ def build_site():
             </div>
             """
             all_news_cards_html += card_html
-            if index < 3: # Keep only the newest 3 for the homepage
+            
+            # Add to homepage only if we haven't reached 3 cards yet
+            if homepage_card_count < 3: 
                 news_cards_html += card_html
+                homepage_card_count += 1
 
                 
     # Inject the generated cards into your Homepage News Section!
