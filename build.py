@@ -4,10 +4,14 @@ import markdown
 import json
 import re
 
+def read_file(filepath):
+    """Helper function to read files quickly."""
+    with open(filepath, 'r', encoding='utf-8') as f:
+        return f.read()
+
 def parse_markdown_file(filepath):
     """Extracts frontmatter and converts the body to HTML."""
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
+    content = read_file(filepath)
     meta = {}
     body = content
     if content.startswith('---'):
@@ -21,11 +25,6 @@ def parse_markdown_file(filepath):
                     meta[key.strip()] = val.strip().strip('"').strip("'")
             body = markdown.markdown(body_markdown)
     return meta, body
-
-def read_file(filepath):
-    """Helper function to read files quickly."""
-    with open(filepath, 'r', encoding='utf-8') as f:
-        return f.read()
 
 def build_site():
     print("Starting the modular site build...")
@@ -97,8 +96,7 @@ def build_site():
     md_files.sort(reverse=True) # Newest first
 
     # Read the layout template
-    with open(os.path.join(base_dir, 'templates', 'layout-news.html'), 'r', encoding='utf-8') as f:
-        layout_news = f.read()
+    layout_news = read_file(os.path.join(base_dir, 'templates', 'layout-news.html'))
 
     news_cards_html = ""
     all_news_cards_html = ""
@@ -110,8 +108,7 @@ def build_site():
         page_filename = filename.replace('.md', '.html') 
         url = "./" + page_filename # Points to the root folder safely!
         
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = read_file(filepath)
             
         title = "بدون عنوان"
         image = "./assets/images/placeholder.jpg" # Fallback image
@@ -292,8 +289,7 @@ def build_site():
         filename = os.path.basename(filepath)
         url = "./" + filename.replace('.md', '.html')
         
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = read_file(filepath)
             
         title = "بدون عنوان"
         image = "./assets/images/placeholder.jpg"
@@ -454,8 +450,7 @@ def build_site():
 
     # Loop through all markdown files and ONLY pick the ones tagged as courses
     for filepath in md_files:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = read_file(filepath)
 
         # Check if it's a course!
         if 'دوره‌ها و کارگاه‌ها' in content:
@@ -530,8 +525,7 @@ def build_site():
 
     # Loop through all markdown files and ONLY pick the ones tagged as sessions
     for filepath in md_files:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = read_file(filepath)
 
         # Check if it's a session!
         if 'نشست‌ها' in content:
@@ -605,8 +599,7 @@ def build_site():
 
     # Loop through all markdown files and ONLY pick the ones tagged as committees
     for filepath in md_files:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = read_file(filepath)
 
         # Check if it's a committee!
         if 'کمیته‌های اصلی' in content:
@@ -681,8 +674,7 @@ def build_site():
 
     # Loop through all markdown files to build the search database
     for filepath in md_files:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = read_file(filepath)
 
         filename = os.path.basename(filepath)
         page_url = "./" + filename.replace('.md', '.html')
@@ -824,8 +816,7 @@ def build_site():
 
     # Loop through all markdown files and pick the ones tagged as 'مدیریت پسماند'
     for filepath in md_files:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = read_file(filepath)
 
         # Check if it has the general waste management tag
         if 'مدیریت پسماند' in content and '---' in content:
@@ -933,8 +924,7 @@ def build_site():
 
     # Loop through all markdown files and ONLY pick the ones tagged as "قانون پسماند"
     for filepath in md_files:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = read_file(filepath)
 
         # Check if it's a law article!
         if 'قانون پسماند' in content:
@@ -1008,8 +998,7 @@ def build_site():
 
     # Loop through all markdown files and ONLY pick the ones tagged as "فناوری پسماند"
     for filepath in md_files:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = read_file(filepath)
 
         # Check if it's a technology article!
         if 'فناوری پسماند' in content:
@@ -1083,8 +1072,7 @@ def build_site():
 
     # Loop through all markdown files and ONLY pick the ones tagged as "شرکت‌های پسماند"
     for filepath in md_files:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = read_file(filepath)
 
         # Check if it's a company profile!
         if 'شرکت‌های پسماند' in content:
@@ -1158,8 +1146,7 @@ def build_site():
 
     # Loop through all markdown files and ONLY pick the ones tagged as "سیستم یکپارچه"
     for filepath in md_files:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = read_file(filepath)
 
         # Check if it's an integrated system article!
         if 'سیستم یکپارچه' in content:
@@ -1233,8 +1220,7 @@ def build_site():
 
     # Loop through all markdown files and ONLY pick the ones tagged as "انتشارات"
     for filepath in md_files:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = read_file(filepath)
 
         # Check if it's a publication!
         if 'انتشارات' in content:
@@ -1308,8 +1294,7 @@ def build_site():
 
     # Loop through all markdown files and ONLY pick the ones tagged as "کنفرانس‌ها"
     for filepath in md_files:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = read_file(filepath)
 
         # Check if it's a conference article!
         if 'کنفرانس‌ها' in content:
@@ -1383,8 +1368,7 @@ def build_site():
 
     # Loop through all markdown files and ONLY pick the ones tagged as "شعب استانی"
     for filepath in md_files:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = read_file(filepath)
 
         # Check if it's a branch article!
         if 'شعب استانی' in content:
