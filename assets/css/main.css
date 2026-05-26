@@ -1,4 +1,15 @@
 /* ==========================================================================
+   0. Local Fonts
+   ========================================================================== */
+@font-face {
+  font-family: 'Vazirmatn';
+  src: local('Vazirmatn'), url('../font/Vazirmatn-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ==========================================================================
    1. Global Variables & Immersive Theme
    ========================================================================== */
 :root {

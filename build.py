@@ -1896,7 +1896,7 @@ def build_site():
         }
         function toPersianDigits(str) {
             if (!str) return '';
-            return str.toString().replace(/\d/g, d => persianDigits[d]);
+            return str.toString().replace(/\\d/g, d => persianDigits[d]);
         }
 
         function formatNationalId(input) {
@@ -2345,7 +2345,229 @@ def build_site():
     with open(os.path.join(base_dir, 'contact.html'), 'w', encoding='utf-8') as f:
         f.write(final_contact_page)
     
-    print("Boom! Index, Article pages, AND Search page generated successfully!")
+    # =====================================================================
+    # 22. Generate the Admin Portal (admin.html)
+    # =====================================================================
+    admin_page_html = """
+    <div class="admin-wrap" style="direction: rtl; font-family: 'Vazirmatn', Tahoma, sans-serif !important; background: #f1f5f9; min-height: 80vh; padding: 60px 20px;">
+        <div id="admin-login-box" style="max-width: 400px; margin: 0 auto; background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center;">
+            <h2 style="color: var(--color-primary); margin-bottom: 25px;">ورود به پنل مدیریت</h2>
+            <div style="margin-bottom: 20px; text-align: right;">
+                <label style="display: block; margin-bottom: 8px; font-weight: bold;">رمز عبور:</label>
+                <input type="password" id="admin-pass" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; font-family: inherit;">
+            </div>
+            <button id="admin-login-btn" style="width: 100%; padding: 12px; background: var(--color-primary); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s;">ورود</button>
+            <p id="admin-error" style="color: #ef4444; margin-top: 15px; display: none;">رمز عبور اشتباه است!</p>
+        </div>
+
+        <div id="admin-dashboard" style="display: none; max-width: 1000px; margin: 0 auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; background: white; padding: 20px 30px; border-radius: 12px; box-shadow: var(--shadow-sm);">
+                <h2 style="margin: 0; color: var(--color-dark);">پنل مدیریت انجمن</h2>
+                <button id="admin-logout-btn" style="background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; padding: 8px 15px; border-radius: 8px; cursor: pointer;">خروج</button>
+            </div>
+
+            <div id="dashboard-home">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                    <!-- News Management -->
+                    <div style="background: white; padding: 30px; border-radius: 16px; box-shadow: var(--shadow-sm); border-top: 4px solid var(--color-primary);">
+                        <h3 style="margin-bottom: 15px;">ایجاد محتوای جدید</h3>
+                        <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 20px;">افزودن اخبار، دوره‌ها، نشست‌ها یا کمیته‌های جدید به سایت.</p>
+                        <button id="open-creator-btn" style="width: 100%; padding: 12px; background: var(--color-primary); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">+ ایجاد مطلب جدید</button>
+                    </div>
+
+                    <!-- Membership Management -->
+                    <div style="background: white; padding: 30px; border-radius: 16px; box-shadow: var(--shadow-sm); border-top: 4px solid var(--color-secondary);">
+                        <h3 style="margin-bottom: 15px;">مدیریت اعضا</h3>
+                        <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 20px;">مشاهده درخواست‌های عضویت و استعلام وضعیت اعضا.</p>
+                        <button style="width: 100%; padding: 12px; background: var(--color-secondary); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: not-allowed; opacity: 0.7;">لیست متقاضیان (بزودی)</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Creator Form -->
+            <div id="content-creator" style="display: none; background: white; padding: 40px; border-radius: 16px; box-shadow: var(--shadow-lg);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px;">
+                    <h3 style="margin: 0;">ایجاد مطلب جدید (تولید کننده فایل)</h3>
+                    <button id="back-to-dash" style="background: none; border: none; color: var(--color-primary); cursor: pointer; font-weight: bold;">&rarr; بازگشت به پنل</button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div class="field">
+                        <label style="display: block; margin-bottom: 8px; font-weight: bold;">عنوان مطلب:</label>
+                        <input type="text" id="post-title" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;" placeholder="مثلاً: برگزاری وبینار مدیریت پسماند">
+                    </div>
+                    <div class="field">
+                        <label style="display: block; margin-bottom: 8px; font-weight: bold;">تاریخ:</label>
+                        <input type="text" id="post-date" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;" placeholder="۱۴۰۳/۰۱/۱۵">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div class="field">
+                        <label style="display: block; margin-bottom: 8px; font-weight: bold;">دسته‌بندی (تگ):</label>
+                        <select id="post-tag" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+                            <option value="اخبار">اخبار عمومی</option>
+                            <option value="دوره‌ها و کارگاه‌ها">دوره آموزشی</option>
+                            <option value="نشست‌ها">نشست تخصصی</option>
+                            <option value="کمیته‌های اصلی">کمیته تخصصی</option>
+                            <option value="قانون پسماند">قوانین و مقررات</option>
+                            <option value="فناوری پسماند">فناوری و نوآوری</option>
+                            <option value="شرکت‌های پسماند">معرفی شرکت</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label style="display: block; margin-bottom: 8px; font-weight: bold;">آدرس تصویر:</label>
+                        <input type="text" id="post-image" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;" placeholder="./assets/images/news/photo.jpg">
+                    </div>
+                </div>
+
+                <div class="field" style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">خلاصه کوتاه (برای کارت‌های صفحه اصلی):</label>
+                    <textarea id="post-summary" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; height: 60px;"></textarea>
+                </div>
+
+                <div class="field" style="margin-bottom: 30px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">متن اصلی مطلب (Markdown):</label>
+                    <textarea id="post-content" style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 8px; height: 250px; font-family: monospace; direction: ltr; text-align: left;"></textarea>
+                </div>
+
+                <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 30px;">
+                    <p style="margin-top: 0; font-weight: bold; color: #1e293b;">راهنمای گام به گام:</p>
+                    <ol style="margin-bottom: 0; padding-right: 20px; color: #475569;">
+                        <li>اطلاعات بالا را پر کنید.</li>
+                        <li>دکمه <strong>«تولید و دانلود فایل»</strong> را بزنید.</li>
+                        <li>فایل دانلود شده را در پوشه <code>content</code> پروژه قرار دهید.</li>
+                        <li>فایل <code>build.py</code> را اجرا کنید تا سایت بروز شود.</li>
+                    </ol>
+                </div>
+
+                <button id="generate-btn" style="width: 100%; padding: 15px; background: var(--color-secondary); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1.1rem;">⬇️ تولید و دانلود فایل محتوا (.md)</button>
+            </div>
+            
+            <div style="margin-top: 40px; background: #fffbeb; border: 1px solid #fde68a; padding: 20px; border-radius: 12px; color: #92400e;">
+                <p><strong>نکته فنی:</strong> به دلیل استاتیک بودن وب‌سایت، مرورگر اجازه ذخیره مستقیم فایل روی سرور را ندارد. این ابزار به شما کمک می‌کند فایل استاندارد را بسازید تا فقط با یک کپی و یک اجرا، سایت را آپدیت کنید.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const loginBox = document.getElementById('admin-login-box');
+            const dashboard = document.getElementById('admin-dashboard');
+            const dashHome = document.getElementById('dashboard-home');
+            const creator = document.getElementById('content-creator');
+            
+            const passInput = document.getElementById('admin-pass');
+            const loginBtn = document.getElementById('admin-login-btn');
+            const logoutBtn = document.getElementById('admin-logout-btn');
+            const errorMsg = document.getElementById('admin-error');
+
+            const openCreator = document.getElementById('open-creator-btn');
+            const backDash = document.getElementById('back-to-dash');
+            const generateBtn = document.getElementById('generate-btn');
+
+            const AUTH_KEY = 'iriswa_admin_auth';
+            const SECRET = 'Mercury_seyl2021';
+
+            function checkAuth() {
+                if (sessionStorage.getItem(AUTH_KEY) === 'true') {
+                    loginBox.style.display = 'none';
+                    dashboard.style.display = 'block';
+                } else {
+                    loginBox.style.display = 'block';
+                    dashboard.style.display = 'none';
+                }
+            }
+
+            loginBtn.addEventListener('click', () => {
+                if (passInput.value === SECRET) {
+                    sessionStorage.setItem(AUTH_KEY, 'true');
+                    errorMsg.style.display = 'none';
+                    checkAuth();
+                } else {
+                    errorMsg.style.display = 'block';
+                }
+            });
+
+            passInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') loginBtn.click();
+            });
+
+            logoutBtn.addEventListener('click', () => {
+                sessionStorage.removeItem(AUTH_KEY);
+                checkAuth();
+            });
+
+            // Navigation
+            openCreator.addEventListener('click', () => {
+                dashHome.style.display = 'none';
+                creator.style.display = 'block';
+                // Set default date
+                const today = new Date().toLocaleDateString('fa-IR');
+                document.getElementById('post-date').value = today;
+            });
+
+            backDash.addEventListener('click', () => {
+                dashHome.style.display = 'block';
+                creator.style.display = 'none';
+            });
+
+            // Generator Logic
+            generateBtn.addEventListener('click', () => {
+                const title = document.getElementById('post-title').value;
+                const date = document.getElementById('post-date').value;
+                const tag = document.getElementById('post-tag').value;
+                const image = document.getElementById('post-image').value;
+                const summary = document.getElementById('post-summary').value;
+                const content = document.getElementById('post-content').value;
+
+                if (!title || !content) {
+                    alert('لطفاً حداقل عنوان و متن اصلی را وارد کنید.');
+                    return;
+                }
+
+                const mdTemplate = `---
+title: "${title}"
+date: "${date}"
+image: "${image || './assets/images/placeholder.jpg'}"
+summary: "${summary}"
+tags: ["${tag}"]
+---
+
+${content}`;
+
+                // Create filename
+                const cleanTitle = title.replace(/\\s+/g, '-').replace(/[^\\u0600-\\u06FFa-zA-Z0-9-]/g, '');
+                const filename = `${new Date().toISOString().split('T')[0]}-${cleanTitle}.md`;
+
+                // Download file
+                const blob = new Blob([mdTemplate], { type: 'text/markdown' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                alert('فایل با موفقیت تولید شد. آن را در پوشه content قرار دهید و build.py را اجرا کنید.');
+            });
+
+            checkAuth();
+        })();
+    </script>
+    """
+
+    final_admin_page = master_template.replace("{{ include 'components/header.html' }}", header)
+    final_admin_page = final_admin_page.replace("{{ include 'components/footer.html' }}", footer)
+    final_admin_page = final_admin_page.replace("{{ content }}", admin_page_html)
+    final_admin_page = final_admin_page.replace("{{ title }}", "پنل مدیریت")
+
+    with open(os.path.join(base_dir, 'admin.html'), 'w', encoding='utf-8') as f:
+        f.write(final_admin_page)
+
+    print("Boom! Index, Article pages, Search page, AND Admin Portal generated successfully!")
 
 if __name__ == "__main__":
     build_site()
