@@ -16,7 +16,7 @@
   /* Brand Colors */
   --color-primary: #047857;       /* Deep Emerald */
   --color-primary-hover: #065f46;
-  --color-secondary: #10B981;     /* Vibrant Emerald Accent */
+  --color-secondary: #047857;     /* Accessible Emerald Accent */
   --color-dark: #111827;          
   
   /* Immersive Backgrounds */
@@ -26,7 +26,7 @@
 
   /* Typography Colors */
   --color-text-main: #374151;
-  --color-text-muted: #6B7280;
+  --color-text-muted: #5F6672;
 
   /* Spacing & Layout */
   --container-width: 1280px;
@@ -134,7 +134,7 @@ ul { list-style: none; }
   box-shadow: var(--shadow-md); border: 1px solid var(--color-border); transition: transform var(--transition-speed);
 }
 .card:hover { transform: translateY(-5px); }
-.card h3 { color: var(--color-dark); margin-bottom: 15px; font-size: 1.4rem;}
+.card h2, .card h3 { color: var(--color-dark); margin-bottom: 15px; font-size: 1.4rem;}
 
 /* Section 3: About & Stats */
 /* Section 3: About & Stats (Bento Box Cards) */
@@ -160,7 +160,7 @@ ul { list-style: none; }
   background-color: var(--color-bg-white);
 }
 
-.stat-card h4 {
+.stat-card h3 {
   font-size: 2.8rem;
   color: var(--color-primary);
   font-weight: 900;
@@ -184,7 +184,7 @@ ul { list-style: none; }
   .stat-card {
     padding: 20px 10px;
   }
-  .stat-card h4 {
+  .stat-card h3 {
     font-size: 2.2rem; /* Slightly smaller numbers for tiny screens */
   }
 
