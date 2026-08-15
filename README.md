@@ -1,4 +1,6 @@
 <div align="center">
+  <img src="docs/readme-hero.svg" alt="IRISWA visual hero" width="100%">
+
   <h1>IRISWA · انجمن مدیریت پسماند ایران</h1>
   <p><strong>A Persian publishing system for environmental knowledge, events, courses, and solid-waste practice.</strong></p>
   <p>
